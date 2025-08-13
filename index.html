@@ -4,14 +4,21 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Lista de Tarefas Simples</title>
+  <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
+
 </head>
 <body>
-  <h1>Lista de Tarefas</h1>
+  <section id="grid-inicial">
+    <h1>Lista de Tarefas</h1>
+    <input type="text" id="nova-tarefa" placeholder="Digite uma tarefa">
+    <button id="adicionar">Adicionar</button>
+    <button id="excluir-todos">Excluir todos</button>
+    <p>Total tarefas: <span id="valorContador">0</span> </p>
+  </section>
 
-  <input type="text" id="nova-tarefa" placeholder="Digite uma tarefa">
-  <button id="adicionar">Adicionar</button>
-
-  <ul id="lista-tarefas"></ul>
+  <section id="tarefas">
+    <ul id="lista-tarefas"></ul>
+  </section>
 </body>
 </html>
