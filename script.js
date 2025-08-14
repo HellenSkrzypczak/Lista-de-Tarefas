@@ -9,7 +9,6 @@ btnAdicionar.addEventListener('click', function() {
     contadorTarefa();
     novaTarefa();
 });
-
 btnExcluirtodos.addEventListener('click', excluirTodos);
 
 inputTarefa.addEventListener('keydown', function(event){
@@ -20,18 +19,36 @@ inputTarefa.addEventListener('keydown', function(event){
     }
 });
 
-//FUNCTIONS
+window.addEventListener('DOMContentLoadead', function() {
+    let tarefas= JSON.parse(localStorage.getItem("tarefas") || "[]");
+    tarefas.forEach(function(tarefa) {
+        criarTarefa(tarefa);
+        totalTarefas++;
+    });
+
+    contador.textContent = totalTarefas;
+})
+
 function obterTextoTarefa() {
     const txtDigitado = inputTarefa.value.trim();
+    
     if (txtDigitado) {
-    criarTarefa(txtDigitado);
-    inputTarefa.value = ''; // limpa o campo
+        criarTarefa(txtDigitado);
+
+        //GUARDA LOCALSTORAGE
+        let tarefas= JSON.parse(localStorage.getItem("tarefas") || "[]");
+        tarefas.push(txtDigitado);
+        localStorage.setItem("tarefas", JSON.stringify(tarefas));
+
+        inputTarefa.value = ''; // limpa o campo
     } else {
         alert('Digite uma tarefa antes de adicionar!');
-        totalTarefas = 0;     
+        totalTarefas--;     
         contador.textContent = totalTarefas;
     }
 }
+
+
 
 function criarTarefa(txtDigitado){
     const li = document.createElement('li');
@@ -42,18 +59,28 @@ function criarTarefa(txtDigitado){
     btnRemover.addEventListener('click', function() {
         listaTarefas.removeChild(li);
         contadorExcluirTarefa()
+
+        let tarefas = JSON.parse(localStorage.getItem("tarefas") || "[]");
+        tarefas = tarefas.filter(t => t !== txtDigitado); //percorre cada item do array, e mantem no array somente as tarefas diferentes do txtDigitado
+        localStorage.setItem("tarefas", JSON.stringify(tarefas)); //converte o array atualizado para uma string
     });
 
     const bntConcluir = document.createElement('button');
     bntConcluir.type = 'button';
     bntConcluir.innerHTML = '<img src="https://img.icons8.com/?&id=11695&format=png&color=000000" alt="icone-concluido" class="icone-btn">';
     bntConcluir.addEventListener('click', function() {
-        li.classList.toggle('concluida');
+        const concluidaAgora = li.classList.toggle('concluida'); // guarda o valor dentro de uma constante, caso o usuario clique em concluir, o valor é true
+        
+        if(concluidaAgora){ //se o valor é true, diminui o contador
+            totalTarefas--;
+        } else {
+            totalTarefas++;//se o usuairo desmarcar, aumenta o contador
+        }
+        contador.textContent = totalTarefas;
     });
 
     li.append(btnRemover, bntConcluir); //adiciona os botos no container pai
     listaTarefas.appendChild(li); //insere o item da tarefa na lista de tarefas 
-    ul.classList.add('custom-ul');
 }
 
 function novaTarefa() {
