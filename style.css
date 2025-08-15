@@ -4,12 +4,16 @@
 body{
     margin: 0;
     text-align: center;
+    /*background-color: rgb(219, 219, 219); */
 }
 ul{
     font-size: 14px;
     list-style-type: none;
     padding: 10px;
  
+}
+#nova-tarefav {
+    box-decoration-break: none;
 }
 .concluida {
     text-decoration: line-through;
@@ -19,7 +23,7 @@ ul{
 li {
     text-align: center;
     height: auto;
-    background-color: rgb(228, 228, 228);
+    
 
 }
 .icone-btn{

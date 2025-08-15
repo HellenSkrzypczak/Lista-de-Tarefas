@@ -7,7 +7,7 @@ let totalTarefas = 0;
 
 btnAdicionar.addEventListener('click', function() {
     contadorTarefa();
-    novaTarefa();
+    obterTextoTarefa();
 });
 btnExcluirtodos.addEventListener('click', excluirTodos);
 
@@ -19,8 +19,8 @@ inputTarefa.addEventListener('keydown', function(event){
     }
 });
 
-window.addEventListener('DOMContentLoadead', function() {
-    let tarefas= JSON.parse(localStorage.getItem("tarefas") || "[]");
+window.addEventListener('DOMContentLoaded', function() { //espera o HTML carregar totalmente para dispara o evento
+    let tarefas= JSON.parse(localStorage.getItem("tarefas") || "[]"); //getItem = busca
     tarefas.forEach(function(tarefa) {
         criarTarefa(tarefa);
         totalTarefas++;
@@ -36,9 +36,9 @@ function obterTextoTarefa() {
         criarTarefa(txtDigitado);
 
         //GUARDA LOCALSTORAGE
-        let tarefas= JSON.parse(localStorage.getItem("tarefas") || "[]");
-        tarefas.push(txtDigitado);
-        localStorage.setItem("tarefas", JSON.stringify(tarefas));
+        let tarefas= JSON.parse(localStorage.getItem("tarefas") || "[]"); //pega a string JSON que esta salva em tarefas  e converte para array, se não existir ele cria
+        tarefas.push(txtDigitado); //insere o valor digitado no final da array
+        localStorage.setItem("tarefas", JSON.stringify(tarefas)); //transforma o array atualizado em string JSON e salva no localstorage
 
         inputTarefa.value = ''; // limpa o campo
     } else {
@@ -47,8 +47,6 @@ function obterTextoTarefa() {
         contador.textContent = totalTarefas;
     }
 }
-
-
 
 function criarTarefa(txtDigitado){
     const li = document.createElement('li');
@@ -79,12 +77,8 @@ function criarTarefa(txtDigitado){
         contador.textContent = totalTarefas;
     });
 
-    li.append(btnRemover, bntConcluir); //adiciona os botos no container pai
-    listaTarefas.appendChild(li); //insere o item da tarefa na lista de tarefas 
-}
-
-function novaTarefa() {
-    obterTextoTarefa();
+    li.append(btnRemover, bntConcluir); 
+    listaTarefas.appendChild(li);  
 }
 
 function excluirTodos(){
