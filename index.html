@@ -9,16 +9,24 @@
 
 </head>
 <body>
-  <section id="grid-inicial">
-    <h1>Lista de Tarefas</h1>
-    <input type="text" id="nova-tarefa" placeholder="Digite uma tarefa">
-    <button id="adicionar">Adicionar</button>
-    <button id="excluir-todos">Excluir todos</button>
-    <p>tarefas pendentes: <span id="valorContador">0</span> </p>
-  </section>
+  <section id="grid-principal">
 
-  <section id="tarefas">
-    <ul id="lista-tarefas"></ul>
+    <section id="grid-cabecalho">
+      <h1>Lista de Tarefas</h1>
+
+      <div class="grid-input-button">
+        <input type="text" id="nova-tarefa" placeholder="Digite uma tarefa">
+        <button id="adicionar">Adicionar</button>
+        <button id="excluir-todos">Excluir todos</button>
+      </div>
+
+      <p>tarefas pendentes: <span id="valorContador">0</span> </p>
+    </section>
+
+    <section id="tarefas">
+      <ul id="lista-tarefas"></ul>
+    </section>
+
   </section>
 </body>
 </html>

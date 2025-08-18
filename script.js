@@ -14,7 +14,8 @@ btnExcluirtodos.addEventListener('click', excluirTodos);
 inputTarefa.addEventListener('keydown', function(event){
     if (event.key === 'Enter')
     {
-        novaTarefa();
+        obterTextoTarefa();
+        contadorTarefa();
         event.preventDefault();
     }
 });
@@ -43,18 +44,20 @@ function obterTextoTarefa() {
         inputTarefa.value = ''; // limpa o campo
     } else {
         alert('Digite uma tarefa antes de adicionar!');
-        totalTarefas--;     
-        contador.textContent = totalTarefas;
+        contadorExcluirTarefa()
     }
 }
 
 function criarTarefa(txtDigitado){
     const li = document.createElement('li');
-    li.textContent = txtDigitado; //atribui o texto ao elemento
+    li.textContent = txtDigitado;
+    li.classList.add("li");
 
-    const btnRemover = document.createElement('button');
-    btnRemover.innerHTML = '<img src="https://img.icons8.com/?&id=17145&format=png&color=000000" alt="icone-remover" class="icone-btn">';
-    btnRemover.addEventListener('click', function() {
+    const liBtnRemover = document.createElement('button');
+    liBtnRemover.classList.add("button");
+    liBtnRemover.innerHTML = '<img src="https://img.icons8.com/?&id=17145&format=png&color=000000" alt="icone-remover" class="icone-btn">';
+    
+    liBtnRemover.addEventListener('click', function() {
         listaTarefas.removeChild(li);
         contadorExcluirTarefa()
 
@@ -63,21 +66,20 @@ function criarTarefa(txtDigitado){
         localStorage.setItem("tarefas", JSON.stringify(tarefas)); //converte o array atualizado para uma string
     });
 
-    const bntConcluir = document.createElement('button');
-    bntConcluir.type = 'button';
-    bntConcluir.innerHTML = '<img src="https://img.icons8.com/?&id=11695&format=png&color=000000" alt="icone-concluido" class="icone-btn">';
-    bntConcluir.addEventListener('click', function() {
+    const liBntConcluir = document.createElement('button');
+    liBntConcluir.classList.add("button");
+    liBntConcluir.innerHTML = '<img src="https://img.icons8.com/?&id=11695&format=png&color=000000" alt="icone-concluido" class="icone-btn">';
+    liBntConcluir.addEventListener('click', function() {
         const concluidaAgora = li.classList.toggle('concluida'); // guarda o valor dentro de uma constante, caso o usuario clique em concluir, o valor é true
         
-        if(concluidaAgora){ //se o valor é true, diminui o contador
-            totalTarefas--;
+        if(concluidaAgora){ //Valida se o valor é true
+            contadorExcluirTarefa();
         } else {
-            totalTarefas++;//se o usuairo desmarcar, aumenta o contador
+            contadorTarefa();
         }
-        contador.textContent = totalTarefas;
     });
 
-    li.append(btnRemover, bntConcluir); 
+    li.append(liBtnRemover, liBntConcluir); 
     listaTarefas.appendChild(li);  
 }
 
@@ -99,8 +101,12 @@ function contadorTarefa(){
 }
 
 function contadorExcluirTarefa(){
-    totalTarefas--;
-    contador.textContent = totalTarefas;
+
+    if (totalTarefas > 0)
+    {
+        totalTarefas--;
+        contador.textContent = totalTarefas;
+    }
 }
 
     
